@@ -1,0 +1,40 @@
+#购物车服务
+# eureka的端口
+server:
+  port: 60130 #提供服务的端口
+# 通过eureka.client.registerWithEureka和 fetchRegistry：false
+# 告知SpringCloud这是一个eureka server
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+      # eureka server的名字
+
+spring:
+  application:
+    name: eureka-provider-cart
+  datasource:
+    url: jdbc:mysql://47.108.201.251:3306/hualian_shop?characterEncoding=UTF8&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: '@lx20121108'
+  #redis配置
+  redis:
+    #redis连接池配置
+    jedis:
+      pool:
+        max-idle: 20
+        min-idle: 10
+    #redis连接配置
+    host: 47.108.201.251
+    database: 0
+    password: '@lx20121108'
+    port: 6379
+  #    RabbitMQ配置
+  rabbitmq:
+    host: 47.108.201.251
+    port: 5672
+    password: '@lx20121108'
+    username: guest

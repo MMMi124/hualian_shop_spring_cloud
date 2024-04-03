@@ -1,0 +1,107 @@
+# eureka的端口
+server:
+  port: 60140 #提供服务的端口
+# 通过eureka.client.registerWithEureka和 fetchRegistry：false
+# 告知SpringCloud这是一个eureka server
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+      # eureka server的名字
+spring:
+  application:
+    name: eureka-provider-goods
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.108.201.251:3306/hualian_shop?characterEncoding=UTF8&serverTimezone=Asia/Shanghai
+    username: root
+    password: '@lx20121108'
+    #    druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    # Druid的其他属性配置
+    druid:
+      # 初始化时建立物理连接的个数
+      initial-size: 5
+      # 连接池的最小空闲数量
+      min-idle: 5
+      # 连接池最大连接数量
+      max-active: 20
+      # 获取连接时最大等待时间，单位毫秒
+      max-wait: 60000
+      # 主要配置以上几个即可
+      timeBetweenEvictionRunsMillis: 600000
+      #配置一个连接在池中最大空间时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      testWhileIdle: true
+      #设置从连接池获取连接时是否检查连接有效性，true检查，false不检查
+      testOnBorrow: true
+      #设置从连接池归还连接时是否检查连接有效性，true检查，false不检查
+      testOnReturn: true
+      #可以支持PSCache（提升写入、查询效率）
+      poolPreparedStatements: true
+      #配置监控统计拦截的filters
+      filter:
+        #self4j(使用log4j的记得导入log4j的依赖）：日志记录
+        slf4j:
+          enabled: true
+        #stat:监控统计
+        stat:
+          enabled: true
+        #wall：防御sql注入 此处配置不能遗漏服务sql监控台不能监控sql
+        wall:
+          enabled: true
+      #配置stat-view-servlet
+      stat-view-servlet:
+        # 是否启用StatViewServlet默认值false
+        enabled: true
+        # 访问路径为/druid时，跳转到StatViewServlet
+        url-pattern: /druid/*
+        # 是否能够重置数据
+        reset-enable: false
+        # 需要账号密码才能访问控制台，默认为root
+        login-username: druid
+        login-password: druid
+        # IP白名单
+        allow: 127.0.0.1
+        # IP黑名单（共同存在时，deny优先于allow）
+        deny:
+      #配置web-stat-filter
+      web-stat-filter:
+        # 是否启用StatFilter默认值false
+        enabled: true
+        # 添加过滤规则
+        url-pattern: /*
+        # 忽略过滤的格式
+        exclusions: /druid/*,*.js,*.gif,*.jpg,*.png,*.css,*.ico
+
+  #redis配置
+  redis:
+    #redis连接池配置
+    jedis:
+      pool:
+        max-idle: 20
+        min-idle: 10
+    #redis连接配置
+    host: 47.108.201.251
+    database: 0
+    password: '@lx20121108'
+    port: 6379
+
+
+
+mybatis-plus:
+  mapper-locations: classpath*:com/mme/mapper/*.xml
+  type-aliases-package: com.mme.domain.entity  #指定别名(本工程加通用工程)
+  global-config:
+    db-config:
+      id-type: auto #主键策略
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+logging:
+  level:
+    com:
+      baomidou:
+        mybatisplus=DEBUG:
